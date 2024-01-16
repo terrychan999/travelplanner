@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用者登入</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FEEBC8;
+            /* 根據圖片的背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #F6AD55;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #2D3748;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #2D3748;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            margin-bottom: 10px;/
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #ECC94B;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #D69E2E;
+        }
+
+
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>使用者登入</h1>
+        </div>
+        <form method="POST" action="/login" id="loginForm">
+            <div class="form-control">
+                <label for="username">帳號</label>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+            <div class="form-control">
+                <label for="password">密碼</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <p>尚未註冊? <a href="/register">點擊這裡</a></p>
+            <button type="submit">登入</button>
+        </form>
+    </div>
+</body>
+
+</html>

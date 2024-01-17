@@ -3,6 +3,7 @@
 default: run
 
 run:
+	rm -rf backend/__pycache__
 	cd backend && python app.py
 
 clean:

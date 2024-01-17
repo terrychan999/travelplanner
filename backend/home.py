@@ -3,11 +3,15 @@ from flask_login import LoginManager, login_required, current_user
 
 from models import db, Users
 
-home = Blueprint('home', __name__, template_folder='../frontend')
+home = Blueprint("home", __name__, template_folder="../frontend")
 login_manager = LoginManager()
 login_manager.init_app(home)
 
-@home.route('/home', methods=['GET'])
+
+@home.route("/home", methods=["GET"])
 @login_required
 def show():
-    return render_template('home.html')
+    if current_user.type == "admin":
+        return render_template("admin_home.html")
+    else:
+        return render_template("home.html")

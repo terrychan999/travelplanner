@@ -19,3 +19,6 @@ run:
 cd backend
 python app.py
 ```
+
+if wants to check the content of sqlite:
+https://inloop.github.io/sqlite-viewer/

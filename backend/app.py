@@ -9,11 +9,12 @@ from login import login
 from logout import logout
 from register import register
 from home import home
+from addplan import addplan
 
-app = Flask(__name__, static_folder='../frontend/static')
+app = Flask(__name__, static_folder="../frontend/static")
 
-app.config['SECRET_KEY'] = 'secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../database.db'
+app.config["SECRET_KEY"] = "secret_key"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../database.db"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -25,14 +26,18 @@ app.register_blueprint(login)
 app.register_blueprint(logout)
 app.register_blueprint(register)
 app.register_blueprint(home)
+app.register_blueprint(addplan)
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
+
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect('login')
+    return redirect("login")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, debug=True)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3000, debug=True)

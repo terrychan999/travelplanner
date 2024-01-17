@@ -53,9 +53,9 @@ class TravelPlan(db.Model):
     transportation_id = db.Column(db.Integer, db.ForeignKey("transportation.id"))
     attraction_id = db.Column(db.Integer, db.ForeignKey("attraction.id"))
     budget_amount = db.Column(db.Float)
-    travelers = db.relationship(
-        "Users", secondary=travelers_travel_plans, backref="travel_plans"
-    )
+    # travelers = db.relationship(
+    #     "Users", secondary=travelers_travel_plans, backref="travel_plans"
+    # )
     accommodation = db.relationship("Accommodation")
     transportation = db.relationship("Transportation")
     attraction = db.relationship("Attraction")

@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, url_for
 import sqlalchemy
 from flask_login import LoginManager
 
@@ -9,7 +9,6 @@ from login import login
 from logout import logout
 from register import register
 from home import home
-from addplan import addplan
 
 app = Flask(__name__, static_folder="../frontend/static")
 
@@ -26,7 +25,6 @@ app.register_blueprint(login)
 app.register_blueprint(logout)
 app.register_blueprint(register)
 app.register_blueprint(home)
-app.register_blueprint(addplan)
 
 
 @login_manager.user_loader
@@ -36,7 +34,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect("login")
+    return redirect(url_for("login.show") + "?error=not-logged-in")
 
 
 if __name__ == "__main__":

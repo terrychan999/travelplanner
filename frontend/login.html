@@ -76,6 +76,7 @@
 
 <body>
     <div class="login-container">
+        <div id="errorMsg" style="color:red;"></div>
         <div class="login-header">
             <h1>使用者登入</h1>
         </div>
@@ -98,5 +99,18 @@
     </div>
 
 </body>
+
+<script>
+    const searchParams = new URLSearchParams(window.location.search);
+    const errorCode = searchParams.get('error');
+    const errorMsg = document.getElementById('errorMsg');
+    if (errorCode == "not-logged-in") {
+        errorMsg.textContent = "請先登入";
+    } else if (errorCode == "user-not-found") {
+        errorMsg.textContent = "沒有這個使用者";
+    } else if (errorCode == "wrong-password") {
+        errorMsg.textContent = "密碼錯誤";
+    }
+</script>
 
 </html>

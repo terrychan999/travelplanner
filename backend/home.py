@@ -204,3 +204,37 @@ def delete_travel_plan(travel_plan_id):
         flash("旅行計劃已成功刪除!", "success")
 
     return redirect("/home")
+
+
+@home.route("/user-management", methods=["GET"])
+@login_required
+def user_management():
+    # 验证当前用户是否是管理员
+    if current_user.type != "admin":
+        flash("您无权访问用户管理页面", "error")
+        return redirect("/home")
+
+    # 查询所有用户
+    all_users = Users.query.all()
+
+    return render_template(
+        "user_management.html", usertype=current_user.type, users=all_users
+    )
+
+
+@home.route("/delete-user/<int:user_id>", methods=["GET"])
+@login_required
+def delete_user(user_id):
+    # 验证当前用户是否是管理员
+    if current_user.type != "admin":
+        flash("您无权删除用户", "error")
+        return redirect("/home")
+
+    user_to_delete = Users.query.get(user_id)
+
+    if user_to_delete:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("用户已成功删除!", "success")
+
+    return redirect("/user-management")

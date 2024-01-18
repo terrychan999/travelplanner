@@ -11,7 +11,4 @@ login_manager.init_app(home)
 @home.route("/home", methods=["GET"])
 @login_required
 def show():
-    if current_user.type == "admin":
-        return render_template("admin_home.html")
-    else:
-        return render_template("home.html")
+    return render_template("admin_home.html", usertype=current_user.type)

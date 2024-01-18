@@ -49,9 +49,10 @@
         }
 
         .side-buttons {
-            flex-basis: 28%;
+            width: 90%;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: space-around;
         }
 
         .side-button {
@@ -71,16 +72,21 @@
 <body>
     <div class="header">
         我的旅行計畫
-
     </div>
+    {% if usertype=="admin" %}
+    <div class="navigation">
+        <button class="button">用戶管理</button>
+        <button class="button">系統管理</button>
+    </div>
+    {% endif %}
     <div class="content">
 
         <div class="side-buttons">
-            <a href="/my-travel-plans" class="button side-button">我的旅遊計畫</a>
-            <a href="/create-new-plan" class="button side-button">新建旅遊計畫</a>
+            <a href="/myplan" class="button side-button">我的旅遊計畫</a>
+            <a href="/addplan" class="button side-button">新建旅遊計畫</a>
         </div>
     </div>
-    <div class="navigation">
+    <div class="navigation" style="position: fixed; bottom: 20px; left: 20px;">
         <a href="/logout"><button class="button logout-button">登出帳號</button></a>
     </div>
 

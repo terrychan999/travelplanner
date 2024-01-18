@@ -29,6 +29,7 @@
         }
 
         .navigation button {
+            background-color: #ffb6c1;
             width: 10rem;
             margin-right: 3rem;
         }
@@ -41,7 +42,7 @@
         }
 
         .add-travel-plan-container {
-            width: 40%;
+            width: 42%;
             padding: 20px;
             background-color: #F6AD55;
             border-radius: 5px;
@@ -50,15 +51,13 @@
         }
 
         .travel-plans-container {
-            width: 40%;
+            width: 42%;
             padding: 20px;
             background-color: #F6AD55;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow-y: scroll;
         }
-
-
 
         h2 {
             color: #2D3748;
@@ -91,18 +90,16 @@
             margin-bottom: 10px;
         }
 
-        .button {
-            background-color: #ffb6c1;
+        button {
+            width: 100%;
+            padding: 10px;
             border: none;
+            background-color: #ECC94B;
             color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         button:hover {
@@ -126,9 +123,23 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            margin-bottom: 15px;
+            /* 調整輸入欄位之間的距離 */
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .label-size {
+            font-size: 18px;
+            /* 您可以根據需要調整字體大小 */
         }
     </style>
-
 </head>
 
 <body>
@@ -136,7 +147,7 @@
         我的旅行計畫
     </div>
     {% if usertype=="admin" %}
-    <div class="navigation">
+    <div class="navigation" style="padding-left: 20px;">
         <button class="button">用戶管理</button>
         <button class="button">系統管理</button>
     </div>
@@ -151,22 +162,22 @@
                 <input type="hidden" name="travel_plan_id" value="{{ edit_travel_plan.id }}">
                 {% endif %}
                 <div class="form-control">
-                    <label for="accommodation">住宿</label>
+                    <label for="accommodation" class="label-size">住宿</label>
                     <input type="text" name="accommodation" placeholder="Accommodation" {% if edit_travel_plan %}
                         value="{{ edit_travel_plan.accommodation }}" {% endif %}>
                 </div>
                 <div class="form-control">
-                    <label for="transportation">交通工具</label>
+                    <label for="transportation" class="label-size">交通工具</label>
                     <input type="text" name="transportation" placeholder="Transportation" {% if edit_travel_plan %}
                         value="{{ edit_travel_plan.transportation }}" {% endif %}>
                 </div>
                 <div class="form-control">
-                    <label for="attraction">景點</label>
+                    <label for="attraction" class="label-size">景點</label>
                     <input type="text" name="attraction" placeholder="Attraction" {% if edit_travel_plan %}
                         value="{{ edit_travel_plan.attraction }}" {% endif %}>
                 </div>
                 <div class="form-control">
-                    <label for="budget_amount">預算金額</label>
+                    <label for="budget_amount" class="label-size">預算金額</label>
                     <input type="number" name="budget_amount" placeholder="Budget Amount"
                         value="{% if edit_travel_plan %}{{ edit_travel_plan.budget_amount }}{% else %}0{% endif %}">
                 </div>
@@ -178,11 +189,11 @@
                 <ul>
                     {% for travel_plan in travel_plans %}
                     <li>
-                        <strong>旅行計劃 {{ loop.index }}</strong>
-                        <p>住宿: {{ travel_plan.accommodation }}</p>
-                        <p>交通工具: {{ travel_plan.transportation }}</p>
-                        <p>景點: {{ travel_plan.attraction }}</p>
-                        <p>預算金額: {{ travel_plan.budget_amount }}</p>
+                        <strong class="label-size">旅行計劃 {{ loop.index }}</strong>
+                        <p class="label-size">住宿: {{ travel_plan.accommodation }}</p>
+                        <p class="label-size">交通工具: {{ travel_plan.transportation }}</p>
+                        <p class="label-size">景點: {{ travel_plan.attraction }}</p>
+                        <p class="label-size">預算金額: {{ travel_plan.budget_amount }}</p>
                         <a href="/home?edit={{ travel_plan.id }}" class="edit-button">編輯</a>
                         <a href="/delete/{{ travel_plan.id }}" class="delete-button">刪除</a>
                     </li>

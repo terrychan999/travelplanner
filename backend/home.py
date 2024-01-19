@@ -1,6 +1,15 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 from flask_login import LoginManager, login_required, current_user
-from models import db, Users, TravelPlan, Accommodation, Transportation, Attraction
+from models import (
+    db,
+    Users,
+    TravelPlan,
+    Accommodation,
+    Transportation,
+    Attraction,
+    Announcement,
+)
+from datetime import datetime
 
 home = Blueprint("home", __name__, template_folder="../frontend")
 login_manager = LoginManager()
@@ -238,3 +247,51 @@ def delete_user(user_id):
         flash("用户已成功删除!", "success")
 
     return redirect("/user-management")
+
+
+@home.route("/announcements", methods=["GET"])
+@login_required
+def view_announcements():
+    announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
+    return render_template(
+        "announcements.html", usertype=current_user.type, announcements=announcements
+    )
+
+
+@home.route("/announce-management", methods=["GET", "POST"])
+@login_required
+def add_announcement():
+    announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
+    if current_user.type != "admin":
+        flash("您无权新增公告", "error")
+        return redirect("/home")
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        content = request.form.get("content")
+
+        if title and content:
+            new_announcement = Announcement(title=title, content=content)
+            db.session.add(new_announcement)
+            db.session.commit()
+            flash("公告已成功新增!", "success")
+            return redirect("/announce-management")
+
+    return render_template("announce-management.html", announcements=announcements)
+
+
+@home.route("/delete-announcement/<int:announcement_id>", methods=["GET"])
+@login_required
+def delete_announcement(announcement_id):
+    if current_user.type != "admin":
+        flash("您无权删除公告", "error")
+        return redirect("/home")
+
+    announcement = Announcement.query.get(announcement_id)
+
+    if announcement:
+        db.session.delete(announcement)
+        db.session.commit()
+        flash("公告已成功删除!", "success")
+
+    return redirect("/announce-management")

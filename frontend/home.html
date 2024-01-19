@@ -146,12 +146,15 @@
     <div class="header">
         我的旅行計畫
     </div>
-    {% if usertype=="admin" %}
+
     <div class="navigation" style="padding-left: 20px;">
+        {% if usertype=="admin" %}
         <a href="/user-management"><button class="button">用戶管理</button></a>
-        <!-- <button class="button">系統管理</button> -->
+        <a href="/announce-management"><button class="button">公告管理</button></a>
+        {% endif %}
+        <a href="/announcements"><button class="button" style="margin:0;">公告欄</button></a>
     </div>
-    {% endif %}
+
     <div class="container">
         <div class="add-travel-plan-container">
             <div class="add-travel-plan-header">

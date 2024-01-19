@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理</title>
+    <title>公告欄</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -41,8 +41,17 @@
             height: 60vh;
         }
 
-        .user-list-container {
-            width: 80%;
+        .add-travel-plan-container {
+            width: 42%;
+            padding: 20px;
+            background-color: #F6AD55;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .travel-plans-container {
+            width: 42%;
             padding: 20px;
             background-color: #F6AD55;
             border-radius: 5px;
@@ -55,33 +64,30 @@
             margin-bottom: 20px;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .input-group {
+            margin-bottom: 15px;
         }
 
-        li {
+        .input-group label {
+            display: block;
+            color: #2D3748;
+            margin-bottom: 5px;
+        }
+
+        .input-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
             border: 1px solid #CBD5E0;
             border-radius: 4px;
-            padding: 10px;
             margin-bottom: 10px;
-            background-color: #ffffff;
         }
 
-        .label-size {
-            font-size: 18px;
-        }
-
-        .delete-button {
-            background-color: #E53E3E;
-            color: white;
-            padding: 5px 10px;
-            text-decoration: none;
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CBD5E0;
             border-radius: 4px;
-        }
-
-        .delete-button:hover {
-            background-color: #C53030;
+            margin-bottom: 10px;
         }
 
         button {
@@ -99,27 +105,73 @@
         button:hover {
             background-color: #D69E2E;
         }
+
+        @media (max-width: 600px) {
+            .add-travel-plan-container {
+                width: 90%;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-control {
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            /* 調整輸入欄位之間的距離 */
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .label-size {
+            font-size: 18px;
+            /* 您可以根據需要調整字體大小 */
+        }
+
+        .add-announcement-container,
+        .announcement-list-container {
+            width: 42%;
+            padding: 20px;
+            background-color: #F6AD55;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* text-align: center; */
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
-        用户管理
+        公告欄
     </div>
     <div class="navigation" style="padding-left: 20px;">
+        {% if usertype=="admin" %}
         <a href="/user-management"><button class="button">用戶管理</button></a>
         <a href="/announce-management"><button class="button">公告管理</button></a>
+        {% endif %}
         <a href="/announcements"><button class="button">公告欄</button></a>
     </div>
     <div class="container">
-        <div class="user-list-container">
-            <h2>所有用户</h2>
+        <div class="announcement-list-container">
+            <h2>公告列表</h2>
             <ul>
-                {% for user in users %}
-                <li>
-                    <strong class="label-size">用户名: {{ user.username }}</strong>
-                    <p class="label-size">用户类型: {{ user.type }}</p>
-                    <a href="/delete-user/{{ user.id }}" class="delete-button">删除用户</a>
+                {% for announcement in announcements %}
+                <li class="announcement-item">
+                    <h3>{{ announcement.title }}</h3>
+                    <p>{{ announcement.content }}</p>
+                    <p class="label-size">发布时间: {{ announcement.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
                 </li>
                 {% endfor %}
             </ul>
@@ -128,7 +180,6 @@
     <div class="navigation" style="position: fixed; bottom: 20px; left: 20px;">
         <a href="/logout"><button class="button logout-button">登出帳號</button></a>
     </div>
-
     <div style="position: fixed; bottom: 20px; right: 20px;">
         <a href="/"><button class="button">回首頁</button></a>
     </div>
